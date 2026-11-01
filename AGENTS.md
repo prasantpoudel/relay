@@ -23,6 +23,39 @@ Consequences to remember:
 - If the notes are ever meant to be published, remove the `docs/` line from **both** `.gitignore`
   and `.prettierignore` in the same commit.
 
+## Branch workflow
+
+```
+main        ← receives merges from develop only. Never commit or push directly.
+develop     ← integration branch. Every feature lands here first.
+feature/*   ← all work happens here, branched from develop.
+```
+
+```bash
+git checkout develop && git pull
+git checkout -b feature/<name>
+
+# ... work, commit ...
+
+git checkout develop
+git merge --no-ff feature/<name>
+git push origin develop
+git branch -d feature/<name>
+```
+
+Promote `develop` into `main` only when it is green and releasable — never feature by feature.
+
+Enforced by the tracked hooks in `.githooks/`. Enable once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+- `pre-push` rejects any push targeting `main`.
+- `no-commit-to-branch` rejects commits made while on `main`.
+
+Do not bypass with `--no-verify`. If a hook is wrong, fix the hook.
+
 ## The one rule that breaks everything
 
 **Never write to stdout from the MCP server.** stdout is the JSON-RPC channel. A single stray

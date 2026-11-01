@@ -1,0 +1,34 @@
+#!/bin/sh
+# Tracked pre-push hook. Enable once per clone:
+#
+#   git config core.hooksPath .githooks
+#
+# Refuses any push that targets a protected branch.
+#
+# Git calls this with:  $1 = remote name, $2 = remote URL
+# and one line on stdin per pushed ref:
+#
+#   <local ref> <local sha> <remote ref> <remote sha>
+#
+# A deletion arrives with a local ref of "(delete)" and an all-zero local sha.
+
+PROTECTED="main"
+status=0
+
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  [ -z "$remote_ref" ] && continue
+  [ "$remote_ref" = "refs/heads/$PROTECTED" ] || continue
+
+  echo "" >&2
+  echo "  ✗ push to '$PROTECTED' is blocked locally." >&2
+  echo "" >&2
+  echo "    Features land in develop first:" >&2
+  echo "      git checkout develop && git merge --no-ff feature/<name>" >&2
+  echo "      git push origin develop" >&2
+  echo "" >&2
+  echo "    Then promote develop to $PROTECTED once it is green." >&2
+  echo "" >&2
+  status=1
+done
+
+exit "$status"

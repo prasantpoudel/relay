@@ -35,3 +35,6 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
+      # main only ever receives merges from develop. Commits on develop are fine.
+      - id: no-commit-to-branch
+        args: [--branch, main]
