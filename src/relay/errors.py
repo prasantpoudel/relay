@@ -63,3 +63,16 @@ class GenerationTimeout(RelayError):
 
     code = "timeout"
     http_status = 504
+
+
+class RemoteFailure(RelayError):
+    """A typed failure reported by the daemon, re-raised in the client with its original code.
+
+    The CLI and the MCP shim should not need to know which process produced the problem; they act on
+    ``code`` and ``http_status`` exactly as if the error had been raised locally.
+    """
+
+    def __init__(self, code: str, message: str, http_status: int = 500) -> None:
+        self.code = code
+        self.http_status = http_status
+        super().__init__(message)

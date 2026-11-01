@@ -6,6 +6,7 @@ conversations belong to which workspace, live task records, and selector-drift c
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sqlite3
 import time
@@ -142,3 +143,24 @@ def get_task(conn: sqlite3.Connection, task_id: str) -> sqlite3.Row | None:
         "SELECT * FROM tasks WHERE id = ?", (task_id,)
     ).fetchone()
     return row
+
+
+def put_conversation(
+    conn: sqlite3.Connection,
+    provider: str,
+    url: str,
+    workspace: str | None = None,
+) -> str:
+    """Remember a conversation URL so a follow-up can return to it after a restart."""
+    conversation_id = hashlib.sha1(f"{provider}:{url}".encode()).hexdigest()[:12]
+    now = time.time()
+    conn.execute(
+        """
+        INSERT INTO conversations (id, provider, url, workspace, created, updated)
+        VALUES (?, ?, ?, ?, ?, ?)
+        ON CONFLICT (id) DO UPDATE SET updated = excluded.updated,
+                                       workspace = excluded.workspace
+        """,
+        (conversation_id, provider, url, workspace, now, now),
+    )
+    return conversation_id

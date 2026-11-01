@@ -1,0 +1,29 @@
+{
+  "composer": [
+    "div[contenteditable=\"true\"].ProseMirror",
+    "div[contenteditable=\"true\"][aria-label*=\"prompt\"]",
+    "div[contenteditable=\"true\"][role=\"textbox\"]",
+    "fieldset div[contenteditable=\"true\"]"
+  ],
+  "assistant_turn": [
+    "div[data-is-streaming]",
+    "div.font-claude-message",
+    "div[data-testid=\"assistant-message\"]",
+    "div[data-testid=\"chat-message\"]"
+  ],
+  "send": [
+    "button[aria-label=\"Send message\"]",
+    "button[aria-label*=\"Send\"]",
+    "button[type=\"submit\"]"
+  ],
+  "stop": ["button[aria-label=\"Stop response\"]", "button[aria-label*=\"Stop\"]"],
+  "quota_banner": [
+    "div[role=\"alert\"]:has-text(\"limit\")",
+    "div[role=\"dialog\"]:has-text(\"limit\")"
+  ],
+  "logged_out": [
+    "a[href*=\"/login\"]",
+    "button:has-text(\"Log in\")",
+    "button:has-text(\"Sign up\")"
+  ]
+}
