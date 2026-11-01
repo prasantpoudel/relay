@@ -1,0 +1,29 @@
+{
+  "composer": [
+    "rich-textarea div[contenteditable=\"true\"]",
+    "div[contenteditable=\"true\"][role=\"textbox\"]",
+    "div.ql-editor[contenteditable=\"true\"]",
+    "textarea[aria-label*=\"prompt\"]"
+  ],
+  "assistant_turn": [
+    "model-response",
+    "message-content",
+    "div.model-response-text",
+    "[data-response-id]"
+  ],
+  "send": [
+    "button[aria-label=\"Send message\"]",
+    "button[aria-label*=\"Send\"]",
+    "button.send-button"
+  ],
+  "stop": ["button[aria-label*=\"Stop\"]", "button:has-text(\"Stop\")"],
+  "quota_banner": [
+    "div[role=\"dialog\"]:has-text(\"limit\")",
+    "div[role=\"alert\"]:has-text(\"limit\")"
+  ],
+  "logged_out": [
+    "a[href*=\"accounts.google.com/ServiceLogin\"]",
+    "a[href*=\"accounts.google.com\"]",
+    "button:has-text(\"Sign in\")"
+  ]
+}

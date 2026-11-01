@@ -1,0 +1,15 @@
+#!/bin/sh
+# Tracked pre-commit hook. Enable once per clone:
+#
+#   git config core.hooksPath .githooks
+#
+# Delegates to the pre-commit framework, which reads .pre-commit-config.yaml.
+
+set -e
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo "relay: 'uv' not found — install it with: brew install uv" >&2
+  exit 1
+fi
+
+exec uv run pre-commit run --color=always
