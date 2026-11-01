@@ -1,0 +1,23 @@
+# The bridge owns a real Chrome profile with live session cookies.
+# It lives in ~/.relay, outside the repo, and must never be committed.
+.relay/
+
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+node_modules/
+
+spike/out/
+*.log
+.DS_Store
+docs/

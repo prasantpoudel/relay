@@ -1,0 +1,25 @@
+# Python belongs to ruff. Prettier must never touch a .py file —
+# two formatters on one file produces churn in both directions.
+*.py
+
+# Local-only design notes. Deliberately untracked (see .gitignore), so formatting
+# them would create uncommittable diffs. If docs/ is ever published, delete this
+# line and the matching .gitignore entry together.
+docs/
+
+.venv/
+node_modules/
+dist/
+build/
+*.egg-info/
+
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# Owned by the daemon at runtime, not source
+spike/out/
+*.log
+
+# Generated; rewriting it on every install is noise
+package-lock.json

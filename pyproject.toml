@@ -1,0 +1,68 @@
+[project]
+name = "relay"
+version = "0.1.0"
+description = "Local bridge that lets one AI assistant consult another through its logged-in web or macOS app."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+    "playwright>=1.64",
+    "mcp>=2.3",
+    "fastapi>=0.162",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+    "markdownify>=1.2",
+    "beautifulsoup4>=4.12",
+    "typer>=0.27",
+]
+
+[project.scripts]
+relay = "relay.cli:app"
+relay-mcp = "relay.mcp_server:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=1.4",
+    "ruff>=0.17",
+    "mypy>=1.11",
+    "pre-commit>=4.7.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/relay"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+extend-exclude = ["spike/out"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+# Line length is the formatter's job; E501 fights `ruff format` on long strings and URLs.
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["relay"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+docstring-code-format = true
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["relay"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]

@@ -1,0 +1,16 @@
+{
+  "name": "relay-tooling",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Formatting for non-Python files. Python is owned by ruff.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}

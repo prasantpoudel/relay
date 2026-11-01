@@ -1,0 +1,37 @@
+# Runs on `git commit`. Install once with:  uv run pre-commit install
+# Manual full run:                          uv run pre-commit run --all-files
+#
+# Python is handled by ruff. Prettier is intentionally NOT wired in here — it needs
+# node at commit time, which would make the hook fail on any machine without it.
+# Run `npm run format` manually, or add:
+#
+#   - repo: local
+#     hooks:
+#       - id: prettier
+#         name: prettier
+#         entry: npx prettier --write
+#         language: system
+#         types_or: [markdown, json, yaml]
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.3
+    hooks:
+      # Lint and autofix. Runs first so the formatter sees clean input.
+      - id: ruff-check
+        args: [--fix, --exit-non-zero-on-fix]
+      # Format. Equivalent to `ruff format`.
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=512]
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
